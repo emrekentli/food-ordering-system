@@ -44,7 +44,7 @@ public class OrderCreateCommandHandler {
         OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
         Order orderResult = saveOrder(orderCreatedEvent.getOrder());
         log.info("Order created with order id: {}", orderResult.getId().getValue());
-        return orderDataMapper.orderToCreateOrderResponse(orderResult);
+        return orderDataMapper.orderToCreateOrderResponse(orderResult, "Order created successfully!");
     }
 
     private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
