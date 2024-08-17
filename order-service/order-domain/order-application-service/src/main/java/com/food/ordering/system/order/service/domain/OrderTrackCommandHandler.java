@@ -18,6 +18,7 @@ import java.util.Optional;
 public class OrderTrackCommandHandler {
 
     private final OrderDataMapper orderDataMapper;
+
     private final OrderRepository orderRepository;
 
     public OrderTrackCommandHandler(OrderDataMapper orderDataMapper, OrderRepository orderRepository) {

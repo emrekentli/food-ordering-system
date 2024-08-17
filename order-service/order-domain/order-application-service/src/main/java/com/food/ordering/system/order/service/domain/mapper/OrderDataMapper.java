@@ -23,11 +23,11 @@ public class OrderDataMapper {
         return Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
                 .products(createOrderCommand.getItems().stream().map(orderItem ->
-                                new Product(new ProductId(orderItem.getProductId())))
+                        new Product(new ProductId(orderItem.getProductId())))
                         .collect(Collectors.toList()))
                 .build();
     }
-
+    
     public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
         return Order.builder()
                 .customerId(new CustomerId(createOrderCommand.getCustomerId()))
@@ -38,11 +38,19 @@ public class OrderDataMapper {
                 .build();
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order,String message) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
         return CreateOrderResponse.builder()
-                .orderTrackingId(order.getTrackingId().getValue())
+                .orderTackingId(order.getTrackingId().getValue())
                 .orderStatus(order.getOrderStatus())
                 .message(message)
+                .build();
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMessages(order.getFailureMessages())
                 .build();
     }
 
@@ -65,13 +73,5 @@ public class OrderDataMapper {
                 orderAddress.getPostalCode(),
                 orderAddress.getCity()
         );
-    }
-
-    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
-        return TrackOrderResponse.builder()
-                .orderTrackingId(order.getTrackingId().getValue())
-                .orderStatus(order.getOrderStatus())
-                .failureMessages(order.getFailureMessages())
-                .build();
     }
 }
